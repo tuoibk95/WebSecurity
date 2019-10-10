@@ -69,9 +69,8 @@ public class Test {
 		try {
 			String artist;
 			System.out.println("Test hàm find artist, nhập vào artist");
-			System.out.print("Aritst:");
 			artist = sc.nextLine();
-			db.findByArtist(artist);
+			CDs = db.findByArtist(artist);
 		} catch (Exception e) {
 			System.out.println("Tìm không thành công");
 			System.out.println(e.getMessage());

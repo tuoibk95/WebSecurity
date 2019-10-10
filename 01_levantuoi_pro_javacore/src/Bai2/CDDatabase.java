@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import WebSecutrity.WebSecurity;
+
 public class CDDatabase extends CommonDB {
 	public void insertCD(CD cd) throws SQLException {
 		String sql = "INSERT INTO CDs (artist,title) VALUES (?,?)";
@@ -16,7 +18,8 @@ public class CDDatabase extends CommonDB {
 			ps.setString(2, cd.getTitle());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO: handle exception
+			System.out.println(getClass().getName() + "" + e.getMessage());
+			e.printStackTrace();
 			throw e;
 		} finally {
 			closeConnection();
@@ -31,7 +34,8 @@ public class CDDatabase extends CommonDB {
 			ps.setString(1, artist);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO: handle exception
+			System.out.println(getClass().getName() + "" + e.getMessage());
+			e.printStackTrace();
 			throw e;
 		} finally {
 			closeConnection();
@@ -43,25 +47,27 @@ public class CDDatabase extends CommonDB {
 		String sql = "SELECT * FROM CDs WHERE artist=?";
 		try {
 			openConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			
+			PreparedStatement ps = conn.prepareStatement(sql.toString());
+			ps.setString(1, "%" + artist + "%");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ps.setString(1, artist);
 				CD cd = new CD(rs.getString("artist"),rs.getString("title"));
 				CDs.add(cd);
 			}
+		} catch (SQLException e) {
+			System.out.println(getClass().getName() + "" + e.getMessage());
+			throw e;
 		} finally {
 			closeConnection();
-			
-		} return CDs;
+			return CDs;
+		} 
 	}
 	
 	public ArrayList<CD> findByTitle(String title, String column) throws SQLException {
 		ArrayList<CD> CDs = new ArrayList<CD>();
-//		WebSecurity ws = new WebSecurity();
-//		ArrayList<String> columnNames = ws.getAllColumn();
-		String sql = "SELECT * FROM CDs WHERE artist=?";
+		WebSecurity ws = new WebSecurity();
+		ArrayList<String> columnNames = ws.getAllColumn();
+		String sql = "SELECT * FROM CDs WHERE title=?";
 		try {
 			openConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -72,8 +78,9 @@ public class CDDatabase extends CommonDB {
 				CDs.add(cd);
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e.getMessage());
+			System.out.println(getClass().getName() + "" + e.getMessage());
+			e.printStackTrace();
+			throw e;
 		} finally {
 			closeConnection();
 			return CDs;

@@ -39,6 +39,6 @@ public class CD {
 	
 	@Override
 	public String toString() {
-		return "CD này có tiêu đề" + title + " của ca sĩ: " + artist;
+		return "CD này có tiêu đề là: " + title + " của ca sĩ: " + artist;
 	}
 }

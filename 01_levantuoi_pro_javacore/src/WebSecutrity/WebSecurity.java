@@ -1,7 +1,4 @@
-/**
- * Copyright(C) [2019]  [Luvina Software Company]
- * [WebSecurity.java], [2019-10-02] [HungHM]
- */
+
 package WebSecutrity;
 
 import java.nio.charset.StandardCharsets;
@@ -29,7 +26,7 @@ public class WebSecurity extends CommonDB{
 	 * @param1 String: string muốn encode
 	 * @return String sau khi đã encode
 	 */
-	public String encode(String str) {
+	public String endcode(String str) {
 		StringBuilder newString = new StringBuilder(str);
 		for (int i = 0; i < str.length(); i++) {
 			switch (str.charAt(i)) {

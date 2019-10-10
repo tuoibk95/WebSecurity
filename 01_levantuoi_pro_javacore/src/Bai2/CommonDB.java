@@ -26,8 +26,7 @@ public class CommonDB {
 			System.out.println(ex.getMessage());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			System.out.println(getClass().getName() + "" + e.getMessage());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -37,7 +36,7 @@ public class CommonDB {
 	// Đóng kết nối Server
 	public void closeConnection() {
 		try {
-			if (!conn.isClosed()) {
+			if (conn != null || !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (SQLException e) {
